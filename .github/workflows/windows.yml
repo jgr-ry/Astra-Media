@@ -1,0 +1,133 @@
+# Builds Astra Media for Windows (64-bit) and publishes a portable ZIP.
+#
+# It reuses VideoLAN's own build container and their prebuilt third party
+# libraries ("contribs"), exactly like VLC's official nightly builds do, so a
+# full build takes about an hour instead of many hours.
+#
+# IMPORTANT: do not modify contrib/, extras/tools/, extras/ci/ or
+# extras/package/win32/ in this repository. The prebuilt libraries are looked
+# up by the last commit touching those folders; changing them would force a
+# full rebuild of every library (longer than GitHub allows).
+
+name: Windows
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'extras/astra/**'
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'extras/astra/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VLC_WIN64_IMAGE: registry.videolan.org/vlc-debian-win64-posix:20260611225331
+  TRIPLET: x86_64-w64-mingw32
+
+jobs:
+  build:
+    name: Compilar para Windows x64
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+
+    steps:
+      - name: Liberar espacio en disco
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          sudo docker image prune --all --force > /dev/null
+          df -h /
+
+      - name: Descargar el código
+        uses: actions/checkout@v4
+        with:
+          # the history is needed to find the matching prebuilt libraries,
+          # blobs are fetched lazily so it stays light
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Buscar las librerías precompiladas de VideoLAN
+        id: contribs
+        run: |
+          SHA=$(git rev-list -1 HEAD -- extras/tools contrib extras/ci extras/package/win32)
+          URL="https://artifacts.videolan.org/vlc/win64/vlc-contrib-${TRIPLET}-${SHA}.tar.zst"
+          echo "Contrib SHA: $SHA"
+          if curl --silent --fail --head --location "$URL" > /dev/null; then
+            echo "Prebuilt contribs found: $URL"
+            echo "url=$URL" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No prebuilt contribs for $SHA. Sync the fork with videolan/vlc or wait for VideoLAN to publish them."
+            exit 1
+          fi
+          echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Compilar
+        env:
+          CONTRIBS_URL: ${{ steps.contribs.outputs.url }}
+        run: |
+          docker run --rm --user 0 \
+            -v "$GITHUB_WORKSPACE:/src" -w /src \
+            -e VLC_PREBUILT_CONTRIBS_URL="$CONTRIBS_URL" \
+            "$VLC_WIN64_IMAGE" bash -c '
+              set -ex
+              git config --global --add safe.directory "*"
+              # Astra Media must not offer VideoLAN updates (they would replace it with VLC).
+              # Patched at build time only, so the prebuilt libraries still match.
+              sed -i "s/--enable-update-check/--disable-update-check/; s/-Dupdate-check=enabled/-Dupdate-check=disabled/" extras/package/win32/build.sh
+              extras/package/win32/build.sh -a x86_64 -p -l
+              cd win64
+              make package-win32-zip
+              git -C /src checkout -- extras/package/win32/build.sh
+              chown -R '"$(id -u):$(id -g)"' /src
+            '
+
+      - name: Preparar el paquete de Astra Media
+        id: package
+        run: |
+          set -ex
+          ZIP=$(ls win64/vlc-*-win64*.zip | grep -v debug | head -1)
+          rm -rf out && mkdir out && cd out
+          unzip -q "../$ZIP"
+          DIR=$(ls -d vlc-*/ | head -1)
+          mv "$DIR" "Astra Media"
+          cp "Astra Media/vlc.exe" "Astra Media/Astra Media.exe"
+          cp ../extras/astra/LEEME.txt "Astra Media/LEEME.txt"
+          cp ../COPYING "Astra Media/COPYING.txt" 2>/dev/null || true
+          NAME="Astra-Media-${{ steps.contribs.outputs.date }}-${{ steps.contribs.outputs.short_sha }}-win64"
+          zip -qr -9 "$NAME.zip" "Astra Media"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          ls -la
+
+      - name: Guardar el resultado
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.name }}
+          path: out/${{ steps.package.outputs.name }}.zip
+          retention-days: 30
+
+      - name: Publicar la versión "nightly"
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          NOTES="Compilación automática de Astra Media para Windows (64 bits), commit ${{ github.sha }}.
+
+          Descomprime el ZIP en cualquier carpeta y abre «Astra Media.exe». No necesita instalación y no toca tu VLC si lo tienes instalado.
+
+          Astra Media es una versión modificada de VLC media player (GPLv2+). VLC es una marca de VideoLAN; este proyecto no está afiliado a VideoLAN. El código fuente completo está en este repositorio."
+          gh release delete nightly --yes --cleanup-tag 2>/dev/null || true
+          gh release create nightly "out/${{ steps.package.outputs.name }}.zip" \
+            --title "Astra Media nightly (${{ steps.contribs.outputs.date }})" \
+            --notes "$NOTES" --prerelease --target "${{ github.sha }}"

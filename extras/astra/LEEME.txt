@@ -1,0 +1,13 @@
+Astra Media
+===========
+
+Para empezar, abre «Astra Media.exe». No necesita instalación: puedes
+mover esta carpeta donde quieras y no afecta a VLC si lo tienes instalado.
+
+Astra Media es una versión modificada de VLC media player, creado por los
+voluntarios de VideoLAN (https://www.videolan.org/). Es software libre bajo
+la licencia GNU GPL versión 2 o posterior (consulta COPYING.txt). El código
+fuente completo está en https://github.com/jgr-ry/astra-media
+
+VLC y el logotipo del cono son marcas de VideoLAN. Astra Media es un
+proyecto independiente y no está afiliado ni respaldado por VideoLAN.
