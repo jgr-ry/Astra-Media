@@ -370,6 +370,29 @@ FocusScope {
                         lyricsLoader.item.lyricsSyncToPlayback = true
                 }
 
+                // Astra Media
+                readonly property bool isPlaying: (Player.playingState === Player.PLAYING_STATE_PLAYING)
+                readonly property bool motionEnabled: audioFocusScope.visible
+                                                      && (Window.visibility !== Window.Minimized)
+                                                      && (Window.visibility !== Window.Hidden)
+
+                // the visualizer is only fed while it can be seen
+                Binding {
+                    target: AudioSpectrum
+                    property: "active"
+                    value: audioFocusScope.motionEnabled && audioFocusScope.isPlaying
+                    restoreMode: Binding.RestoreValue
+                }
+
+                // living background made of the artwork colors
+                AstraAurora {
+                    id: aurora
+
+                    source: cover.source
+                    energy: AudioSpectrum.bass
+                    running: audioFocusScope.motionEnabled && audioFocusScope.isPlaying
+                }
+
                 // background image
                 Widgets.DualKawaseBlur {
                     id: blurredBackground
@@ -391,12 +414,18 @@ FocusScope {
                     width: (cover.sar < dar) ? parent.width :  parent.height * cover.sar
                     height: (cover.sar < dar) ? parent.width / cover.sar :  parent.height
 
-                    source: textureProviderIndirection
+                    source: aurora.textureProvider
 
                     postprocess: true
                     tint: bgtheme.palette.isDark ? "black" : "white"
-                    tintStrength: 0.5
+                    tintStrength: bgtheme.palette.isDark ? 0.46 : 0.42
+                    noiseStrength: 0.025
                     backgroundColor: bgtheme.bg.primary
+
+                    Binding on live {
+                        when: aurora.running
+                        value: true
+                    }
 
                     readonly property ColorContext colorContext: ColorContext {
                         id: bgtheme
@@ -421,7 +450,7 @@ FocusScope {
                         // used where texture sampling becomes broken, we need this as
                         // `QSGTextureView` has a workaround for that bug. This is totally
                         // acceptable as there is virtually no overhead.
-                        source: cover
+                        source: cover.sourceTextureProviderItem
                     }
 
                     Component.onCompleted: {
@@ -450,7 +479,8 @@ FocusScope {
                         }
 
                         onTriggered: {
-                            blurredBackground.live = false
+                            if (!aurora.running)
+                                blurredBackground.live = false
                         }
                     }
                 }
@@ -595,8 +625,36 @@ FocusScope {
 
                             readonly property real sizeConstant: 2.7182
 
-                            Image {
+                            Widgets.ImageExt {
                                 id: cover
+
+                                // Astra Media: rounded artwork that breathes with the bass,
+                                // and steps back a little while the music is paused
+                                radius: VLCStyle.cover_radius
+
+                                property real pauseScale: audioFocusScope.isPlaying ? 1.0 : 0.86
+                                Behavior on pauseScale {
+                                    NumberAnimation {
+                                        duration: VLCStyle.duration_veryLong
+                                        easing.type: VLCStyle.easing_spring
+                                        easing.overshoot: 1.1
+                                    }
+                                }
+
+                                property real popScale: 1.0
+                                NumberAnimation {
+                                    id: popAnimation
+                                    target: cover
+                                    property: "popScale"
+                                    from: 0.9
+                                    to: 1.0
+                                    duration: VLCStyle.duration_veryLong
+                                    easing.type: VLCStyle.easing_spring
+                                    easing.overshoot: VLCStyle.spring_overshoot
+                                }
+
+                                scale: pauseScale * popScale * (1.0 + AudioSpectrum.bass * 0.035)
+                                transformOrigin: Item.Center
 
                                 //source aspect ratio
                                 readonly property real sar: paintedWidth / paintedHeight
@@ -614,12 +672,12 @@ FocusScope {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 source: targetSource
                                 fillMode: Image.PreserveAspectFit
-                                mipmap: true
                                 cache: false
                                 asynchronous: true
 
                                 onTargetSourceChanged: {
                                     cover.source = targetSource
+                                    popAnimation.restart()
                                 }
 
                                 onSourceChanged: {
@@ -654,9 +712,9 @@ FocusScope {
                                 }
 
                                 Widgets.RoundedRectangleShadow {
-                                    color: Qt.rgba(0, 0, 0, .18)
+                                    color: Qt.rgba(0, 0, 0, .18 + AudioSpectrum.bass * .12)
                                     yOffset: VLCStyle.dp(24, VLCStyle.scale)
-                                    blurRadius: VLCStyle.dp(54, VLCStyle.scale)
+                                    blurRadius: VLCStyle.dp(54, VLCStyle.scale) * (1.0 + AudioSpectrum.bass * 0.4)
                                 }
 
                                 Widgets.RoundedRectangleShadow {
@@ -679,11 +737,14 @@ FocusScope {
                                 value: centerContent.height > (albumLabel.y + albumLabel.height)
                             }
 
-                            text: Player.album
+                            text: Player.title || Player.name
                             font.pixelSize: VLCStyle.fontSize_xxlarge
+                            font.weight: Font.DemiBold
                             horizontalAlignment: Text.AlignHCenter
+                            elide: Text.ElideRight
+                            Layout.maximumWidth: centerContent.width - VLCStyle.margin_xlarge * 2
                             color: centerTheme.fg.primary
-                            Accessible.description: qsTr("album")
+                            Accessible.description: qsTr("title")
 
                             property bool componentCompleted: false
 
@@ -704,10 +765,12 @@ FocusScope {
                                 value: centerContent.height > (artistLabel.y + artistLabel.height)
                             }
 
-                            text: Player.artist
-                            font.weight: Font.Light
+                            text: [Player.artist, Player.album].filter((t) => !!t).join("  ·  ")
+                            font.pixelSize: VLCStyle.fontSize_large
                             horizontalAlignment: Text.AlignHCenter
-                            color: centerTheme.fg.primary
+                            elide: Text.ElideRight
+                            Layout.maximumWidth: centerContent.width - VLCStyle.margin_xlarge * 2
+                            color: centerTheme.fg.secondary
                             Accessible.description: qsTr("artist")
 
                             property bool componentCompleted: false
@@ -776,6 +839,33 @@ FocusScope {
                             Accessible.role: Accessible.StaticText
                             Accessible.name: qsTr("Lyrics")
                             Accessible.description: text
+                        }
+
+                        AstraSpectrumBars {
+                            id: spectrumBars
+
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.topMargin: VLCStyle.margin_large
+                            Layout.preferredWidth: Math.min(implicitWidth, centerContent.width - VLCStyle.margin_xlarge * 2)
+                            Layout.preferredHeight: implicitHeight
+
+                            color: centerTheme.palette.isDark ? "white" : Qt.darker(centerTheme.accent, 1.2)
+                            glowColor: centerTheme.accent
+
+                            visible: false
+
+                            Binding on visible {
+                                delayed: true
+                                when: spectrumBars.componentCompleted
+                                value: Player.videoTracks.count === 0 && !audioFocusScope.lyricsLayoutActive
+                                       && centerContent.height > (spectrumBars.y + spectrumBars.height)
+                            }
+
+                            property bool componentCompleted: false
+
+                            Component.onCompleted: {
+                                componentCompleted = true
+                            }
                         }
 
                         Widgets.NavigableRow {
@@ -1292,9 +1382,20 @@ FocusScope {
 
         focus: true
 
-        rightPadding: VLCStyle.applicationHorizontalMargin
-        leftPadding: VLCStyle.applicationHorizontalMargin
+        // Astra Media: when listening to music the controls float above the
+        // artwork in a rounded "glass" panel
+        readonly property bool floating: !MainCtx.hasEmbededVideo
+        readonly property real floatingMargin: floating ? VLCStyle.dynamicAppMargins(rootPlayer.width) : 0
+
+        rightPadding: VLCStyle.applicationHorizontalMargin + (floating ? floatingMargin + VLCStyle.margin_normal : 0)
+        leftPadding: VLCStyle.applicationHorizontalMargin + (floating ? floatingMargin + VLCStyle.margin_normal : 0)
         bottomPadding: VLCStyle.applicationVerticalMargin + VLCStyle.margin_xsmall
+                       + (floating ? floatingMargin + VLCStyle.margin_xsmall : 0)
+
+        leftInset: VLCStyle.applicationHorizontalMargin + floatingMargin
+        rightInset: VLCStyle.applicationHorizontalMargin + floatingMargin
+        bottomInset: floating ? (VLCStyle.applicationVerticalMargin + floatingMargin) : 0
+        topInset: sliderY - (floating ? VLCStyle.margin_small : 0)
 
         textPosition: (MainCtx.pinVideoControls)
                       ? ControlBar.TimeTextPosition.LeftRightSlider
@@ -1351,6 +1452,22 @@ FocusScope {
             }
 
             color: windowTheme.bg.primary
+
+            radius: controlBar.floating ? VLCStyle.glass_radius : 0
+
+            border.width: controlBar.floating ? VLCStyle.border : 0
+            border.color: Qt.alpha(windowTheme.palette.isDark ? "white" : "black", VLCStyle.glass_borderOpacity)
+
+            Behavior on radius {
+                NumberAnimation { duration: VLCStyle.duration_long; easing.type: VLCStyle.easing_standard }
+            }
+
+            Widgets.RoundedRectangleShadow {
+                visible: controlBar.floating
+                color: Qt.rgba(0, 0, 0, .20)
+                yOffset: VLCStyle.dp(12, VLCStyle.scale)
+                blurRadius: VLCStyle.dp(32, VLCStyle.scale)
+            }
         }
 
         FadeControllerStateGroup {
