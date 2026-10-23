@@ -101,7 +101,7 @@ T.AbstractButton {
         id: dragItem
 
         getTextureProvider: function() {
-            return root.contentItem?.image
+            return root.contentItem?.image?.sourceTextureProviderItem ?? null
         }
 
         onRequestData: (_, resolve, reject) => {
@@ -157,11 +157,15 @@ T.AbstractButton {
 
         property alias image: coverImage
 
-        Image {
+        // Astra Media: rounded artwork
+        Widgets.ImageExt {
             id: coverImage
 
             Layout.fillHeight: true
             Layout.preferredWidth: height
+
+            radius: VLCStyle.dp(8, VLCStyle.scale)
+            backgroundColor: theme.bg.primary
 
             source: {
                 if (!paintOnly && Player.artwork && Player.artwork.toString())
@@ -172,10 +176,9 @@ T.AbstractButton {
                     return VLCStyle.noArtAlbumCover
             }
 
-            sourceSize.height: root.height * MainCtx.effectiveDevicePixelRatio(Window.window)
+            sourceSize: Qt.size(0, root.height * MainCtx.effectiveDevicePixelRatio(Window.window))
 
             fillMode: Image.PreserveAspectCrop
-            clip: true
 
             asynchronous: true
 
@@ -194,26 +197,11 @@ T.AbstractButton {
                     source = VLCStyle.noArtAlbumCover
             }
 
-            Rectangle {
-                // NOTE: If the image is opaque and if there is depth buffer, this rectangle
-                //       is not going to be painted by the graphics backend. Though, it will
-                //       still have its own scene graph node, as well as QML item.
-                // TODO: Investigate if using `ImageExt` just for its built-in background
-                //       coloring is worth it.
-                anchors.centerIn: parent
-                anchors.alignWhenCentered: false
-                width: parent.paintedWidth
-                height: parent.paintedHeight
-                z: -1
-
-                color: theme.bg.primary
-
+            Widgets.RoundedRectangleShadow {
                 visible: (coverImage.status === Image.Ready)
-            }
-
-            Widgets.DefaultShadow {
-                visible: (coverImage.status === Image.Ready)
-                z: -2
+                color: Qt.rgba(0, 0, 0, 0.22)
+                yOffset: VLCStyle.dp(2, VLCStyle.scale)
+                blurRadius: VLCStyle.dp(8, VLCStyle.scale)
             }
         }
 
@@ -242,7 +230,8 @@ T.AbstractButton {
                     else
                         return Player.name
                 }
-                color: theme.fg.primary
+                color: theme.fg.secondary // Astra: strong title
+                font.weight: Font.DemiBold
             }
 
             Widgets.MenuCaption {
@@ -263,7 +252,7 @@ T.AbstractButton {
                         Player.artist
                 }
 
-                color: theme.fg.secondary
+                color: theme.fg.primary // Astra: dimmed artist
             }
 
             Widgets.MenuCaption {
