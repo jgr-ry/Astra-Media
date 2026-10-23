@@ -1044,7 +1044,8 @@ FocusScope {
                   resumeVisible)
 
         focus: true
-        title: Player.title
+        // Astra Media: with music the title is already shown under the artwork
+        title: MainCtx.hasEmbededVideo ? Player.title : ""
 
         pinControls: MainCtx.pinVideoControls
 

@@ -56,6 +56,11 @@ FocusScope {
 
     property bool _showMiniPlayer: false
 
+    // Astra Media: the home page shows its own "Now playing" card, the floating
+    // picture-in-picture video would only cover it
+    readonly property bool _homeShowsNowPlaying: !MainCtx.mediaLibraryAvailable
+                                                 && History.viewPath.indexOf("home") !== -1
+
     property bool _showCSD: MainCtx.clientSideDecoration
         && !(MainCtx.intfMainWindow.visibility === Window.FullScreen)
 
@@ -985,27 +990,29 @@ FocusScope {
                 bottom: loaderUpdatePane.top
                 left: parent.left
                 bottomMargin: VLCStyle.margin_normal
+                // Astra Media: never cover the side bar
                 leftMargin: VLCStyle.margin_normal + VLCStyle.applicationHorizontalMargin
+                            + (sidebar.visible ? sidebar.x + sidebar.width : 0)
             }
 
             width: VLCStyle.dp(320, VLCStyle.scale)
             height: VLCStyle.dp(180, VLCStyle.scale)
             z: 4
-            visible: g_mainDisplay._showMiniPlayer && MainCtx.hasEmbededVideo
-            enabled: g_mainDisplay._showMiniPlayer && MainCtx.hasEmbededVideo
+            visible: g_mainDisplay._showMiniPlayer && MainCtx.hasEmbededVideo && !g_mainDisplay._homeShowsNowPlaying
+            enabled: visible
 
             Binding on visible {
                 id: visibleBinding
                 when: false
                 delayed: true
-                value: g_mainDisplay._showMiniPlayer && MainCtx.hasEmbededVideo
+                value: g_mainDisplay._showMiniPlayer && MainCtx.hasEmbededVideo && !g_mainDisplay._homeShowsNowPlaying
             }
 
             Component.onCompleted: {
                 Qt.callLater(() => { visibleBinding.when = true })
             }
 
-            dragXMin: VLCStyle.applicationHorizontalMargin
+            dragXMin: VLCStyle.applicationHorizontalMargin + (sidebar.visible ? sidebar.x + sidebar.width : 0)
             dragXMax: g_mainDisplay.width - playerPip.width - VLCStyle.applicationHorizontalMargin
             dragYMin: localTopbar.y + localTopbar.height
             dragYMax: loaderUpdatePane.y - playerPip.height
