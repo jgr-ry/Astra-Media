@@ -301,6 +301,26 @@ QToolButton#toolbarEditor {
     padding: 5px 16px;
 }
 QToolButton#toolbarEditor:hover { background: %CONTROL_HOVER%; }
+QToolButton#playButton {
+    background: %ACC%;
+    color: #FFFFFF;
+    border: 1px solid %ACC_PRESSED%;
+    border-radius: 8px;
+    padding: 5px 30px 5px 16px;
+    font-weight: 600;
+}
+QToolButton#playButton:hover { background: %ACC_HOVER%; }
+QToolButton#playButton:pressed { background: %ACC_PRESSED%; }
+QToolButton#playButton:disabled { background: %DISABLED%; border-color: %DISABLED%; }
+QToolButton#playButton::menu-button {
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+    width: 22px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+QToolButton#playButton::menu-arrow { image: url(:/astra/chevron-down-white.svg); width: 12px; height: 12px; }
+QToolButton::menu-indicator { image: url(:/astra/chevron-down-%V%.svg); width: 10px; height: 10px; subcontrol-position: right center; subcontrol-origin: padding; right: 4px; }
 
 QComboBox, QFontComboBox {
     background: %CONTROL%;

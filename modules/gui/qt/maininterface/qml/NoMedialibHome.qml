@@ -38,7 +38,7 @@ FocusScope {
 
     readonly property bool hasMedia: Player.isStarted
     readonly property bool isPlaying: Player.playingState === Player.PLAYING_STATE_PLAYING
-    readonly property bool isDark: theme.palette.isDark
+    readonly property bool isDark: theme.palette?.isDark ?? false
 
     readonly property real contentWidth: Math.min(width - VLCStyle.margin_xlarge * 2, VLCStyle.dp(980, VLCStyle.scale))
 
@@ -60,12 +60,9 @@ FocusScope {
     }
 
     // the visualizer of the card only runs while it can be seen
-    Binding {
-        target: AudioSpectrum
-        property: "active"
-        value: root.visible && root.hasMedia && root.isPlaying && !Player.hasVideoOutput
-        restoreMode: Binding.RestoreValue
-    }
+    readonly property bool spectrumWanted: root.visible && root.hasMedia && root.isPlaying && !Player.hasVideoOutput
+    onSpectrumWantedChanged: AudioSpectrum.request(root, spectrumWanted)
+    Component.onCompleted: AudioSpectrum.request(root, spectrumWanted)
 
     component Tile: T.AbstractButton {
         id: tile

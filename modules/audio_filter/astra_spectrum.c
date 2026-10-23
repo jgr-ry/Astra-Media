@@ -178,10 +178,13 @@ static int Open(vlc_object_t *obj)
 {
     filter_t *filter = (filter_t *)obj;
 
-    if (filter->fmt_in.audio.i_format != VLC_CODEC_FL32
-     || filter->fmt_in.audio.i_rate == 0
+    if (filter->fmt_in.audio.i_rate == 0
      || filter->fmt_in.audio.i_channels == 0)
         return VLC_EGENERIC;
+
+    /* work in float, the core inserts a converter when needed */
+    filter->fmt_in.audio.i_format = VLC_CODEC_FL32;
+    aout_FormatPrepare(&filter->fmt_in.audio);
 
     filter_sys_t *sys = calloc(1, sizeof (*sys));
     if (unlikely(sys == NULL))

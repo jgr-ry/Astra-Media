@@ -972,6 +972,7 @@ libqt_plugin_la_RES = \
 	pixmaps/astra/dash.svg \
 	pixmaps/astra/chevron-down-light.svg \
 	pixmaps/astra/chevron-down-dark.svg \
+	pixmaps/astra/chevron-down-white.svg \
 	pixmaps/astra/chevron-up-light.svg \
 	pixmaps/astra/chevron-up-dark.svg \
 	pixmaps/astra/chevron-right-light.svg \

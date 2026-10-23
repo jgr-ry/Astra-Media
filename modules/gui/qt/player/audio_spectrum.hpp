@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <QSet>
 
 #include <array>
 #include <atomic>
@@ -38,8 +39,8 @@ class AudioSpectrum : public QObject
 {
     Q_OBJECT
 
-    // set to true while a visualizer is on screen, nothing is computed otherwise
-    Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged FINAL)
+    // true while at least one visualizer is on screen, nothing is computed otherwise
+    Q_PROPERTY(bool active READ isActive NOTIFY activeChanged FINAL)
     // incremented for every new visual frame, bind on it to refresh band()
     Q_PROPERTY(int frame READ frame NOTIFY frameChanged FINAL)
     Q_PROPERTY(int bandCount READ bandCount CONSTANT FINAL)
@@ -59,7 +60,10 @@ public:
     ~AudioSpectrum() override;
 
     bool isActive() const { return m_active; }
-    void setActive(bool active);
+
+    // each visualizer tells whether it currently needs data; the analysis
+    // runs while at least one does (owners are forgotten when destroyed)
+    Q_INVOKABLE void request(QObject* owner, bool wanted);
 
     int frame() const { return m_frame; }
     int bandCount() const { return BAND_COUNT; }
@@ -94,6 +98,7 @@ private:
     void attach();
     void detach();
     void tick();
+    void setActive(bool active);
 
     qt_intf_t* m_intf = nullptr;
     PlayerController* m_player = nullptr;
@@ -101,6 +106,7 @@ private:
 
     bool m_active = false;
     bool m_receiving = false;
+    QSet<QObject*> m_consumers;
     std::atomic<int> m_latency { 140 };
     int m_frame = 0;
 
