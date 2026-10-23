@@ -1,7 +1,7 @@
-<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-  <g fill="#757575">
-    <path d="M8 8v5h32V8zm0 10v5h32v-5zm0 10v5h18v-5z"/>
-    <path d="m40 34-9 6V28z" fill-rule="evenodd"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5AC8FA"/><stop offset="1" stop-color="#32ADE6"/></linearGradient>
+  <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient></defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#g)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#s)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 21 H42 M14 30 H42 M14 39 H30"/><path d="M38 37 L49 43.5 L38 50 Z" fill="#FFFFFF"/></g>
 </svg>
-

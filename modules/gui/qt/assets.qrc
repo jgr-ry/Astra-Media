@@ -1,4 +1,14 @@
 <RCC>
+    <qresource prefix="/astra">
+        <file alias="check.svg">pixmaps/astra/check.svg</file>
+        <file alias="dash.svg">pixmaps/astra/dash.svg</file>
+        <file alias="chevron-down-light.svg">pixmaps/astra/chevron-down-light.svg</file>
+        <file alias="chevron-down-dark.svg">pixmaps/astra/chevron-down-dark.svg</file>
+        <file alias="chevron-up-light.svg">pixmaps/astra/chevron-up-light.svg</file>
+        <file alias="chevron-up-dark.svg">pixmaps/astra/chevron-up-dark.svg</file>
+        <file alias="chevron-right-light.svg">pixmaps/astra/chevron-right-light.svg</file>
+        <file alias="chevron-right-dark.svg">pixmaps/astra/chevron-right-dark.svg</file>
+    </qresource>
     <qresource prefix="/logo">
         <file alias="vlc256.png">../../../share/icons/256x256/vlc.png</file>
         <file alias="vlc128.png">../../../share/icons/128x128/vlc.png</file>

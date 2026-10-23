@@ -558,14 +558,17 @@ AdvPrefsPanel::AdvPrefsPanel( qt_intf_t *_p_intf, QWidget *_parent,
     global_layout->setContentsMargins(2, 2, 2, 2);
 
     QLabel *titleLabel = new QLabel( heading );
+    titleLabel->setObjectName( "astraPrefsTitle" );
     QFont titleFont = QApplication::font();
-    titleFont.setPointSize( titleFont.pointSize() + 6 );
+    titleFont.setPointSizeF( titleFont.pointSizeF() + 8 );
+    titleFont.setBold( true );
     titleLabel->setFont( titleFont );
 
     // Title <hr>
     QFrame *title_line = new QFrame;
     title_line->setFrameShape(QFrame::HLine);
     title_line->setFrameShadow(QFrame::Sunken);
+    title_line->hide(); // Astra Media: the large title is enough
 
     QLabel *helpLabel = new QLabel( this );
     helpLabel->setWordWrap( true );

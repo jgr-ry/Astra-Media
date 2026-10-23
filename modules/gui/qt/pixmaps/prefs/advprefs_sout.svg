@@ -1,4 +1,7 @@
-<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 8v32h3v-4h4v4h21v-4a4 4 0 0 1-4-4v-4a4 4 0 0 1 4-4V8H11v4H7V8zm16 4h8v4h-4v15a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 1 .102V16zM7 15h4v4H7zm0 7h4v4H7zm31 2v3h-8v6h8v3l6-6zM7 29h4v4H7z" fill="#757575"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#64D2FF"/><stop offset="1" stop-color="#0A84FF"/></linearGradient>
+  <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient></defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#g)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#s)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="36" r="4" fill="#FFFFFF"/><path d="M23 27 Q32 19 41 27"/><path d="M17 21 Q32 8 47 21"/><path d="M32 40 V50"/></g>
 </svg>
-

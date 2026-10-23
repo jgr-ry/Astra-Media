@@ -66,11 +66,14 @@ PrefsDialog::PrefsDialog( QWindow *parent, qt_intf_t *_p_intf )
     setLayout( main_layout );
 
     /* View (panel) selection */
-    types = new QGroupBox( qtr("Show settings") );
-    types->setAlignment( Qt::AlignHCenter );
+    /* Astra Media: shown as a segmented control */
+    types = new QFrame();
+    types->setObjectName( "astraSegmented" );
+    types->setToolTip( qtr("Show settings") );
+    types->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Fixed );
     QHBoxLayout *types_l = new QHBoxLayout;
-    types_l->setSpacing( 3 );
-    types_l->setContentsMargins(3, 3, 3, 3);
+    types_l->setSpacing( 2 );
+    types_l->setContentsMargins(2, 2, 2, 2);
     simple = new QRadioButton( qtr( "Simple" ), types );
     simple->setToolTip( qtr( "Switch to simple preferences view" ) );
     all = new QRadioButton( qtr("All"), types );
@@ -87,6 +90,8 @@ PrefsDialog::PrefsDialog( QWindow *parent, qt_intf_t *_p_intf )
     QDialogButtonBox *buttonsBox = new QDialogButtonBox();
     QPushButton *save = new QPushButton( qtr( "&Save" ) );
     save->setToolTip( qtr( "Save and close the dialog" ) );
+    save->setDefault( true );
+    save->setProperty( "astraPrimary", true );
     QPushButton *cancel = new QPushButton( qtr( "&Cancel" ) );
     QPushButton *reset = new QPushButton( qtr( "&Reset Preferences" ) );
 
@@ -162,10 +167,11 @@ PrefsDialog::PrefsDialog( QWindow *parent, qt_intf_t *_p_intf )
 
     /* Layout  */
     main_layout->addWidget( stack, 0, 0, 3, 3 );
-    main_layout->addWidget( types, 3, 0, 2, 1 );
+    main_layout->addWidget( types, 4, 0, 1, 1, Qt::AlignLeft | Qt::AlignVCenter );
     main_layout->addWidget( buttonsBox, 4, 2, 1 ,1 );
     main_layout->setRowStretch( 2, 4 );
-    main_layout->setContentsMargins(9, 9, 9, 9);
+    main_layout->setContentsMargins(18, 14, 18, 16);
+    main_layout->setVerticalSpacing( 12 );
 
     switch( var_InheritInteger( p_intf, "qt-initial-prefs-view" ) )
     {
@@ -182,7 +188,7 @@ PrefsDialog::PrefsDialog( QWindow *parent, qt_intf_t *_p_intf )
     BUTTONACT( all, &PrefsDialog::setAdvanced );
     BUTTONACT( expert, &PrefsDialog::setExpert );
 
-    QVLCTools::restoreWidgetPosition( p_intf, "Preferences", this, QSize( 850, 700 ) );
+    QVLCTools::restoreWidgetPosition( p_intf, "Preferences", this, QSize( 940, 720 ) );
 }
 
 PrefsDialog::~PrefsDialog()

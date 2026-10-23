@@ -60,6 +60,8 @@ extern "C" char **environ;
 #include <QList>
 #include <QTranslator>
 
+#include "style/astra_widget_style.hpp"
+
 #if __has_include(<rhi/qrhi.h>) // Qt 6.6
 #define RHI_HEADER_AVAILABLE
 #include <rhi/qrhi.h>
@@ -1308,6 +1310,11 @@ static void *Thread( void *obj )
 #else
     p_intf->p_mi = new MainCtx(p_intf);
 #endif
+
+    /* Astra Media: Apple-like look for the classic dialogs (preferences...),
+     * following the interface color scheme. A style forced by the user in the
+     * preferences is still applied afterwards. */
+    (new AstraWidgetStyle(p_intf->p_mi, p_intf->p_mi))->install();
 
     if( !p_intf->b_isDialogProvider )
     {

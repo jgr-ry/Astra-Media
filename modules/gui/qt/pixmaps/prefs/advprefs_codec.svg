@@ -1,4 +1,7 @@
-<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-  <path d="M16 8v4a4 4 0 0 1 4 4v4a4 4 0 0 1-4 4v16h21v-4h4v4h3V8h-3v4h-4V8h-9zm-5 4v3H4v6h7v3l6-6zm15 0h8v4h-4v15a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 1 .102V16zm11 3h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" fill="#757575" fill-rule="evenodd"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C17CFF"/><stop offset="1" stop-color="#AF52DE"/></linearGradient>
+  <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient></defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#g)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#s)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="19" width="26" height="26" rx="4"/><rect x="26" y="26" width="12" height="12" rx="2" fill="#FFFFFF"/><path d="M26 13 V19 M38 13 V19 M26 45 V51 M38 45 V51 M13 26 H19 M13 38 H19 M45 26 H51 M45 38 H51"/></g>
 </svg>
-
