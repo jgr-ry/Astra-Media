@@ -110,6 +110,18 @@ T.ToolButton {
 
         color: control.color
 
+        // Astra Media: icons react to the pointer with a small spring
+        scale: control.down ? VLCStyle.pressedScale
+                            : ((control.hovered && !control.paintOnly) ? VLCStyle.hoveredScale : 1.0)
+
+        Behavior on scale {
+            NumberAnimation {
+                duration: VLCStyle.duration_long
+                easing.type: VLCStyle.easing_spring
+                easing.overshoot: VLCStyle.spring_overshoot
+            }
+        }
+
         DelayedBehavior on color {
             delayedEnabled: theme.initialized
 

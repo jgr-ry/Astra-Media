@@ -40,9 +40,37 @@ T.StackView {
 
     // Settings
 
-    replaceEnter: null
+    // Astra Media: pages fade in while settling into place, the old page
+    // quickly fades away.
+    replaceEnter: Transition {
+        ParallelAnimation {
+            NumberAnimation {
+                property: "opacity"
+                from: 0.0
+                to: 1.0
+                duration: VLCStyle.duration_long
+                easing.type: VLCStyle.easing_standard
+            }
 
-    replaceExit: null
+            NumberAnimation {
+                property: "scale"
+                from: 0.985
+                to: 1.0
+                duration: VLCStyle.duration_veryLong
+                easing.type: VLCStyle.easing_emphasized
+            }
+        }
+    }
+
+    replaceExit: Transition {
+        NumberAnimation {
+            property: "opacity"
+            from: 1.0
+            to: 0.0
+            duration: VLCStyle.duration_short
+            easing.type: Easing.InCubic
+        }
+    }
 
     //don't report this node
     Accessible.ignored: true

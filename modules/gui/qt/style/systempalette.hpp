@@ -111,27 +111,27 @@ public:
     Q_PROPERTY(CSDMetrics* csdMetrics READ getCSDMetrics NOTIFY CSDMetricsChanged FINAL)
 
     //standard color definitions used by light/dark themes
-    COLOR_DEFINITION(orange500, "#FF8800");
-    COLOR_DEFINITION(orange800, "#FF610A");
+    COLOR_DEFINITION(orange500, "#0A84FF"); // Astra: accent for dark scheme (Apple system blue)
+    COLOR_DEFINITION(orange800, "#007AFF"); // Astra: accent for light scheme (Apple system blue)
 
-    COLOR_DEFINITION(orange400, "#f89a06"); //FIXME name have been chosen randomly by me
-    COLOR_DEFINITION(orange200, "#e29a06"); //FIXME name have been chosen randomly by me
+    COLOR_DEFINITION(orange400, "#5E5CE6"); //FIXME name have been chosen randomly by me
+    COLOR_DEFINITION(orange200, "#BF5AF2"); //FIXME name have been chosen randomly by me
 
-    COLOR_DEFINITION(darkGrey200, "#1E1E1E");
-    COLOR_DEFINITION(darkGrey300, "#212121");
-    COLOR_DEFINITION(darkGrey400, "#242424");
-    COLOR_DEFINITION(darkGrey500, "#272727");
-    COLOR_DEFINITION(darkGrey600, "#2A2A2A");
-    COLOR_DEFINITION(darkGrey700, "#2D2D2D");
-    COLOR_DEFINITION(darkGrey800, "#303030");
+    COLOR_DEFINITION(darkGrey200, "#151517");
+    COLOR_DEFINITION(darkGrey300, "#1C1C1E");
+    COLOR_DEFINITION(darkGrey400, "#222225");
+    COLOR_DEFINITION(darkGrey500, "#28282B");
+    COLOR_DEFINITION(darkGrey600, "#2C2C2E");
+    COLOR_DEFINITION(darkGrey700, "#333336");
+    COLOR_DEFINITION(darkGrey800, "#3A3A3C");
 
-    COLOR_DEFINITION(lightGrey100, "#FAFAFA");
-    COLOR_DEFINITION(lightGrey200, "#F6F6F6");
-    COLOR_DEFINITION(lightGrey300, "#F2F2F2");
-    COLOR_DEFINITION(lightGrey400, "#EDEDED");
-    COLOR_DEFINITION(lightGrey500, "#E9E9E9");
-    COLOR_DEFINITION(lightGrey600, "#E5E5E5");
-    COLOR_DEFINITION(lightGrey700, "#E0E0E0");
+    COLOR_DEFINITION(lightGrey100, "#FBFBFD");
+    COLOR_DEFINITION(lightGrey200, "#F5F5F7");
+    COLOR_DEFINITION(lightGrey300, "#F0F0F4");
+    COLOR_DEFINITION(lightGrey400, "#EBEBF0");
+    COLOR_DEFINITION(lightGrey500, "#E5E5EA");
+    COLOR_DEFINITION(lightGrey600, "#DEDEE4");
+    COLOR_DEFINITION(lightGrey700, "#D1D1D6");
 
     COLOR_DEFINITION(red500, "#FF0000");
 
