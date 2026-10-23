@@ -166,13 +166,16 @@ T.AbstractButton {
             source: {
                 if (!paintOnly && Player.artwork && Player.artwork.toString())
                     return VLCAccessImage.uri(Player.artwork)
+                else if (!paintOnly && Player.hasVideoOutput)
+                    return VLCStyle.noArtVideoCover
                 else
                     return VLCStyle.noArtAlbumCover
             }
 
             sourceSize.height: root.height * MainCtx.effectiveDevicePixelRatio(Window.window)
 
-            fillMode: Image.PreserveAspectFit
+            fillMode: Image.PreserveAspectCrop
+            clip: true
 
             asynchronous: true
 

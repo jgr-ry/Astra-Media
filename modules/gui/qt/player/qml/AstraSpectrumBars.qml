@@ -37,6 +37,9 @@ Item {
 
     property bool mirrored: true
 
+    // falling peak markers, best kept for large visualizers
+    property bool showPeaks: true
+
     property real spacingRatio: 0.45
 
     readonly property int barCount: mirrored ? bands * 2 : bands
@@ -96,12 +99,12 @@ Item {
                     GradientStop { position: 1.0; color: Qt.alpha(root.color, 0.95) }
                 }
 
-                opacity: 0.45 + 0.55 * bar.value
+                opacity: 0.3 + 0.7 * Math.min(1.0, bar.value * 1.4)
             }
 
             // falling peak markers, above and below
             Repeater {
-                model: 2
+                model: root.showPeaks ? 2 : 0
 
                 Rectangle {
                     required property int index

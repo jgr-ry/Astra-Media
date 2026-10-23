@@ -632,7 +632,9 @@ void SystemPalette::makeLightPalette()
     //slider
     {
         C::ColorSet CS = C::Slider;
-        setColor(CS, C::Bg, C::Primary, C::Normal, lightGrey400); //#EEEEEE on the designs
+        setColor(CS, C::Bg, C::Primary, C::Normal, setColorAlpha(QColor("#787880"), 0.22));
+        setColor(CS, C::Bg, C::Primary, C::Focused, setColorAlpha(QColor("#787880"), 0.32));
+        setColor(CS, C::Bg, C::Primary, C::Hovered, setColorAlpha(QColor("#787880"), 0.32));
         setColor(CS, C::Bg, C::Secondary, C::Normal, setColorAlpha(lightGrey700, 0.6));
         setColor(CS, C::Fg, C::Primary, C::Normal, orange800);
         setColor(CS, C::Fg, C::Positive, C::Normal, QColor("#34C759"));
@@ -695,7 +697,7 @@ void SystemPalette::makeDarkPalette()
     {
         C::ColorSet CS = C::View;
         setColor(CS, C::Bg, C::Primary, C::Normal, darkGrey300 );
-        setColor(CS, C::Bg, C::Secondary, C::Normal, Qt::black );
+        setColor(CS, C::Bg, C::Secondary, C::Normal, darkGrey600 ); // Astra: elevated surfaces, as on macOS
 
         setColor(CS, C::Fg, C::Primary, C::Normal, Qt::white );
         setColor(CS, C::Fg, C::Primary, C::Disabled, setColorAlpha(Qt::white, 0.3) );

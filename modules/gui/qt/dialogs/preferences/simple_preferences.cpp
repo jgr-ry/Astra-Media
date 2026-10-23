@@ -70,8 +70,8 @@
 #include <wrl/client.h>
 #endif
 
-#define ICON_HEIGHT 48
-#define ICON_WIDTH 48
+#define ICON_HEIGHT 40
+#define ICON_WIDTH 40
 
 #ifdef _WIN32
 # include <vlc_charset.h>
@@ -223,6 +223,7 @@ private:
 SPrefsCatList::SPrefsCatList( qt_intf_t *_p_intf, QWidget *_parent ) :
                                   QWidget( _parent ), p_intf( _p_intf )
 {
+    setObjectName( "astraCategoryBar" );
     QHBoxLayout *layout = new QHBoxLayout();
 
     /* Use autoExclusive buttons and a mapper as QButtonGroup can't
@@ -363,14 +364,17 @@ SPrefsPanel::SPrefsPanel( qt_intf_t *_p_intf, QWidget *_parent,
 
     // Title Label
     QLabel *panel_label = new QLabel;
+    panel_label->setObjectName( "astraPrefsTitle" );
     QFont labelFont = QApplication::font();
-    labelFont.setPointSize( labelFont.pointSize() + 6 );
+    labelFont.setPointSizeF( labelFont.pointSizeF() + 8 );
+    labelFont.setBold( true );
     panel_label->setFont( labelFont );
 
     // Title <hr>
     QFrame *title_line = new QFrame;
     title_line->setFrameShape(QFrame::HLine);
     title_line->setFrameShadow(QFrame::Sunken);
+    title_line->hide(); // Astra Media: the large title is enough
 
     QFont italicFont = QApplication::font();
     italicFont.setItalic( true );

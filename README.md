@@ -13,8 +13,12 @@
 </p>
 
 <p align="center">
-  <img src="extras/astra/screenshots/reproductor-claro.jpg" width="356" alt="Reproductor en modo claro">
-  <img src="extras/astra/screenshots/inicio.png" width="356" alt="Pantalla de inicio">
+  <img src="extras/astra/screenshots/inicio-oscuro.jpg" width="356" alt="Inicio con la tarjeta «Reproduciendo ahora»">
+  <img src="extras/astra/screenshots/inicio-claro.jpg" width="356" alt="Inicio en modo claro">
+</p>
+
+<p align="center">
+  <img src="extras/astra/screenshots/ajustes.jpg" width="560" alt="Ajustes rediseñados">
 </p>
 
 ## Qué tiene de especial
@@ -25,10 +29,12 @@ Astra Media es una versión modificada de VLC 4 con una interfaz rediseñada al 
 - **Fondo vivo.** Detrás del reproductor se mueve un fondo hecho con los colores de la portada, desenfocado y animado, que respira con los graves.
 - **La portada respira.** Late suavemente con la música y se encoge un poco al pausar, como en Apple Music.
 - **Barra de control flotante** tipo cristal, con esquinas redondeadas y sombra.
+- **Inicio «Reproduciendo ahora».** Si hay algo sonando, el inicio muestra una tarjeta grande con la carátula, el visualizador y los controles, y debajo accesos rápidos para abrir archivos, carpetas, discos, emisiones de red o un enlace copiado.
+- **Ajustes al estilo macOS.** Iconos de colores por sección, títulos grandes, tarjetas redondeadas, selector segmentado y controles con el azul de Apple. El mismo estilo se aplica a todas las ventanas clásicas (información del medio, efectos, abrir medios...).
 - **Colores de Apple** en modo claro y oscuro: azul del sistema como color de acento, grises de macOS e iOS, verde en los interruptores.
 - **Animaciones con muelle** en botones, transiciones suaves entre pantallas y tiempos más pausados.
 - **Marca propia:** nombre, icono y logotipo de Astra Media, sin el cono de VLC.
-- **En español.** La interfaz sigue el idioma de Windows e incluye las traducciones al español de todo lo nuevo.
+- **Todo en español.** La interfaz sigue el idioma de Windows; la traducción al español está completa, incluidos los ajustes avanzados y los nombres de idiomas.
 
 ## Descargar para Windows
 

@@ -281,6 +281,8 @@ libqt_plugin_la_SOURCES = \
 	style/qtthemeprovider.hpp \
 	style/colorcontext.cpp \
 	style/colorcontext.hpp \
+	style/astra_widget_style.cpp \
+	style/astra_widget_style.hpp \
 	style/systempalette.cpp \
 	style/systempalette.hpp \
 	style/vlcicons.cpp 	style/vlcicons.hpp \
@@ -488,6 +490,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	network/networkmediamodel.moc.cpp \
 	network/standardpathmodel.moc.cpp \
 	style/colorcontext.moc.cpp \
+	style/astra_widget_style.moc.cpp \
 	style/systempalette.moc.cpp \
 	style/vlcicons.moc.cpp \
 	player/delay_estimator.moc.cpp \
@@ -965,6 +968,15 @@ libqt_plugin_la_RES = \
 	pixmaps/prefs/sample_complete.png \
 	pixmaps/prefs/sample_minimal.png \
 	pixmaps/prefs/sample_skins.png \
+	pixmaps/astra/check.svg \
+	pixmaps/astra/dash.svg \
+	pixmaps/astra/chevron-down-light.svg \
+	pixmaps/astra/chevron-down-dark.svg \
+	pixmaps/astra/chevron-down-white.svg \
+	pixmaps/astra/chevron-up-light.svg \
+	pixmaps/astra/chevron-up-dark.svg \
+	pixmaps/astra/chevron-right-light.svg \
+	pixmaps/astra/chevron-right-dark.svg \
 	pixmaps/prefs/spref_audio.png \
 	pixmaps/prefs/spref_hotkeys.png \
 	pixmaps/prefs/spref_input.png \

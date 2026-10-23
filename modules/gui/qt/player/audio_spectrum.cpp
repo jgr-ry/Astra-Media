@@ -119,6 +119,30 @@ void AudioSpectrum::detach()
     m_pending.clear();
 }
 
+void AudioSpectrum::request(QObject* owner, bool wanted)
+{
+    if (!owner)
+        return;
+
+    if (wanted)
+    {
+        if (!m_consumers.contains(owner))
+        {
+            m_consumers.insert(owner);
+            connect(owner, &QObject::destroyed, this, [this](QObject* obj) {
+                m_consumers.remove(obj);
+                setActive(!m_consumers.isEmpty());
+            });
+        }
+    }
+    else if (m_consumers.remove(owner))
+    {
+        disconnect(owner, &QObject::destroyed, this, nullptr);
+    }
+
+    setActive(!m_consumers.isEmpty());
+}
+
 void AudioSpectrum::setActive(bool active)
 {
     if (m_active == active)

@@ -32,6 +32,7 @@ class SPrefsCatList;
 class SPrefsPanel;
 class QTreeWidgetItem;
 class QGroupBox;
+class QFrame;
 class QRadioButton;
 class QWidget;
 class QCheckBox;
@@ -55,7 +56,7 @@ private:
 
     /* View selection */
     enum { SIMPLE, ADVANCED, EXPERT };
-    QGroupBox *types;
+    QFrame *types;
     QRadioButton *simple, *all, *expert;
 
     /* Simple view components */

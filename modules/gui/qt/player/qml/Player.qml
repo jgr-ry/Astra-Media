@@ -373,16 +373,13 @@ FocusScope {
                 // Astra Media
                 readonly property bool isPlaying: (Player.playingState === Player.PLAYING_STATE_PLAYING)
                 readonly property bool motionEnabled: audioFocusScope.visible
-                                                      && (Window.visibility !== Window.Minimized)
-                                                      && (Window.visibility !== Window.Hidden)
+                                                      && (MainCtx.intfMainWindow.visibility !== Window.Minimized)
+                                                      && (MainCtx.intfMainWindow.visibility !== Window.Hidden)
 
                 // the visualizer is only fed while it can be seen
-                Binding {
-                    target: AudioSpectrum
-                    property: "active"
-                    value: audioFocusScope.motionEnabled && audioFocusScope.isPlaying
-                    restoreMode: Binding.RestoreValue
-                }
+                readonly property bool spectrumWanted: audioFocusScope.motionEnabled && audioFocusScope.isPlaying
+                onSpectrumWantedChanged: AudioSpectrum.request(audioFocusScope, spectrumWanted)
+                Component.onCompleted: AudioSpectrum.request(audioFocusScope, spectrumWanted)
 
                 // living background made of the artwork colors
                 AstraAurora {
@@ -418,7 +415,7 @@ FocusScope {
 
                     postprocess: true
                     tint: bgtheme.palette.isDark ? "black" : "white"
-                    tintStrength: bgtheme.palette.isDark ? 0.46 : 0.42
+                    tintStrength: (bgtheme.palette?.isDark ?? true) ? 0.46 : 0.42
                     noiseStrength: 0.025
                     backgroundColor: bgtheme.bg.primary
 
@@ -849,7 +846,7 @@ FocusScope {
                             Layout.preferredWidth: Math.min(implicitWidth, centerContent.width - VLCStyle.margin_xlarge * 2)
                             Layout.preferredHeight: implicitHeight
 
-                            color: centerTheme.palette.isDark ? "white" : Qt.darker(centerTheme.accent, 1.2)
+                            color: (centerTheme.palette?.isDark ?? true) ? "white" : Qt.darker(centerTheme.accent, 1.2)
                             glowColor: centerTheme.accent
 
                             visible: false
@@ -1044,7 +1041,8 @@ FocusScope {
                   resumeVisible)
 
         focus: true
-        title: Player.title
+        // Astra Media: with music the title is already shown under the artwork
+        title: MainCtx.hasEmbededVideo ? Player.title : ""
 
         pinControls: MainCtx.pinVideoControls
 
@@ -1456,7 +1454,7 @@ FocusScope {
             radius: controlBar.floating ? VLCStyle.glass_radius : 0
 
             border.width: controlBar.floating ? VLCStyle.border : 0
-            border.color: Qt.alpha(windowTheme.palette.isDark ? "white" : "black", VLCStyle.glass_borderOpacity)
+            border.color: Qt.alpha((windowTheme.palette?.isDark ?? true) ? "white" : "black", VLCStyle.glass_borderOpacity)
 
             Behavior on radius {
                 NumberAnimation { duration: VLCStyle.duration_long; easing.type: VLCStyle.easing_standard }
