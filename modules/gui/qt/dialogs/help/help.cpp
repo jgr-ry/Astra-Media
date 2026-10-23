@@ -92,10 +92,12 @@ AboutDialog::AboutDialog( qt_intf_t *_p_intf)
     setWindowModality( Qt::WindowModal );
 
     ui.version->setText(qfu( " " VERSION_MESSAGE ) );
-    ui.title->setText("<html><head/><body><p><span style=\" font-size:26pt; color:#353535;\"> " + qtr( "VLC media player" ) + " </span></p></body></html>");
+    ui.title->setText("<html><head/><body><p><span style=\" font-size:26pt; color:#353535;\"> " + qtr( "Astra Media" ) + " </span></p></body></html>");
 
+    /* Astra Media is a modified version of VLC media player (GPLv2+). Keep the
+     * credit to VideoLAN and the trademark notice visible to users. */
     ui.MainBlabla->setText("<html><head/><body>" +
-    qtr( "<p>VLC media player is a free and open source media player, encoder, and streamer made by the volunteers of the <a href=\"https://www.videolan.org/\"><span style=\" text-decoration: underline; color:#0057ae;\">VideoLAN</span></a> community.</p><p>VLC uses its internal codecs, works on essentially every popular platform, and can read almost all files, CDs, DVDs, network streams, capture cards and other media formats!</p><p><a href=\"https://www.videolan.org/contribute/\"><span style=\" text-decoration: underline; color:#0057ae;\">Help and join us!</span></a>" ) +
+    qtr( "<p>Astra Media is a free and open source media player based on VLC media player, made by the volunteers of the <a href=\"https://www.videolan.org/\"><span style=\" text-decoration: underline; color:#0057ae;\">VideoLAN</span></a> community, with a redesigned interface.</p><p>VLC is a trademark of VideoLAN. Astra Media is an independent project, it is not affiliated with nor endorsed by VideoLAN.</p><p>Source code: <a href=\"https://github.com/jgr-ry/astra-media\"><span style=\" text-decoration: underline; color:#0057ae;\">github.com/jgr-ry/astra-media</span></a>" ) +
     "</p></body> </html>");
 
     const QDate today = QDate::currentDate();

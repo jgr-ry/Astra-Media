@@ -40490,9 +40490,6 @@ msgstr "Lista del administrador multimedia"
 #~ msgid "SessionManager"
 #~ msgstr "Nombre de sesión"
 
-#, fuzzy
-#~ msgid "title"
-#~ msgstr "Título"
 
 #, fuzzy
 #~ msgid "Key"
@@ -44258,3 +44255,29 @@ msgstr "Lista del administrador multimedia"
 
 #~ msgid "Fingerprinting track..."
 #~ msgstr "Rastreo de huella digital..."
+
+#. Astra Media
+msgid "Astra Media"
+msgstr "Astra Media"
+
+msgid "&Hide Astra Media in taskbar"
+msgstr "&Ocultar Astra Media en la barra de tareas"
+
+msgid "Sho&w Astra Media"
+msgstr "&Mostrar Astra Media"
+
+msgid "Audio visualizer"
+msgstr "Visualizador de audio"
+
+msgid "title"
+msgstr "título"
+
+msgid "Astra spectrum"
+msgstr "Espectro de Astra"
+
+msgid "Spectrum analyser for the Astra Media visualizer"
+msgstr "Analizador de espectro para el visualizador de Astra Media"
+
+msgid "<p>Astra Media is a free and open source media player based on VLC media player, made by the volunteers of the <a href=\"https://www.videolan.org/\"><span style=\" text-decoration: underline; color:#0057ae;\">VideoLAN</span></a> community, with a redesigned interface.</p><p>VLC is a trademark of VideoLAN. Astra Media is an independent project, it is not affiliated with nor endorsed by VideoLAN.</p><p>Source code: <a href=\"https://github.com/jgr-ry/astra-media\"><span style=\" text-decoration: underline; color:#0057ae;\">github.com/jgr-ry/astra-media</span></a>"
+msgstr "<p>Astra Media es un reproductor multimedia libre y de código abierto basado en VLC media player, creado por los voluntarios de la comunidad <a href=\"https://www.videolan.org/\"><span style=\" text-decoration: underline; color:#0057ae;\">VideoLAN</span></a>, con una interfaz rediseñada.</p><p>VLC es una marca registrada de VideoLAN. Astra Media es un proyecto independiente, no está afiliado ni respaldado por VideoLAN.</p><p>Código fuente: <a href=\"https://github.com/jgr-ry/astra-media\"><span style=\" text-decoration: underline; color:#0057ae;\">github.com/jgr-ry/astra-media</span></a>"
+

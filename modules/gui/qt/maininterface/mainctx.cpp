@@ -1145,8 +1145,8 @@ double MainCtx::dp(const double px) const
 
 bool MainCtx::useXmasCone() const
 {
-    return (QDate::currentDate().dayOfYear() >= QT_XMAS_JOKE_DAY)
-            && var_InheritBool( p_intf, "qt-icon-change" );
+    // Astra Media: the holiday cone belongs to VLC, we always show our own logo
+    return false;
 }
 
 bool WindowStateHolder::holdFullscreen(QWindow *window, Source source, bool hold)

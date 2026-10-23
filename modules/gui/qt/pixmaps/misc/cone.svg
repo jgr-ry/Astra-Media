@@ -1,4 +1,31 @@
-<svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
-  <path d="M65 8.76c-1.511 0-3.023.369-4.219 1.108-2.675 1.654-4.219 8.438-4.219 8.438L54.031 25.9c7.312 4.599 14.625 4.647 21.938 0l-2.532-7.594s-1.543-6.784-4.218-8.438C68.022 9.129 66.511 8.761 65 8.761zM47.281 46.15l-8.437 25.312c17.304 11.16 34.739 11.376 52.312 0L82.72 46.15c-11.912 8.86-23.725 8.888-35.438 0zM22.812 81.587 11 121.243h108l-11.813-39.656H94.531l1.688 5.063s1.401 4.523 0 5.906c-14.817 14.618-47.82 13.973-62.438-.844-1.185-1.201 0-5.062 0-5.062l1.688-5.063z" fill="#FF8800"/>
-  <path d="m35.469 81.585-1.688 5.063s-1.185 3.86 0 5.062c14.618 14.817 47.62 15.462 62.438.844 1.401-1.383 0-5.906 0-5.906l-1.688-5.063-3.375-10.125c-17.573 11.376-35.008 11.159-52.312 0zm11.812-35.437c11.713 8.888 23.526 8.86 35.438 0l-6.75-20.25c-7.313 4.647-14.625 4.599-21.938 0z" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Astra Media logo. Original artwork for the Astra Media fork. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2AA7FF"/>
+      <stop offset="0.5" stop-color="#5E5CE6"/>
+      <stop offset="1" stop-color="#BF5AF2"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.3" cy="0.2" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="star" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E8E6FF"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bg)"/>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#shine)"/>
+  <circle cx="256" cy="256" r="170" fill="url(#glow)"/>
+  <!-- four-point star -->
+  <path d="M256 92 C 268 196, 316 244, 420 256 C 316 268, 268 316, 256 420 C 244 316, 196 268, 92 256 C 196 244, 244 196, 256 92 Z" fill="url(#star)"/>
+  <!-- play mark inside the star -->
+  <path d="M238 222 L 292 256 L 238 290 Z" fill="#5E5CE6" stroke="#5E5CE6" stroke-width="10" stroke-linejoin="round"/>
+  <!-- small sparkle -->
+  <path d="M378 118 C 381 140, 390 149, 412 152 C 390 155, 381 164, 378 186 C 375 164, 366 155, 344 152 C 366 149, 375 140, 378 118 Z" fill="#FFFFFF" fill-opacity="0.9"/>
 </svg>
