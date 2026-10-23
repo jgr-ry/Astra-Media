@@ -35,6 +35,7 @@
 
 #include "playlist/playlist_model.hpp"
 #include "playlist/playlist_controller.hpp"
+#include "player/audio_spectrum.hpp"
 
 #include "util/csdmenu.hpp"
 #include "util/item_key_event_filter.hpp"
@@ -314,6 +315,8 @@ void MainUI::registerQMLTypes()
         qmlRegisterUncreatableType<ProgramListModel>(uri, versionMajor, versionMinor, "ProgramListModel", "available programs of a media" );
         assert(m_intf->p_mainPlayerController);
         qmlRegisterSingletonInstance<PlayerController>(uri, versionMajor, versionMinor, "Player", m_intf->p_mainPlayerController);
+        qmlRegisterSingletonInstance<AudioSpectrum>(uri, versionMajor, versionMinor, "AudioSpectrum",
+                                                    new AudioSpectrum(m_intf, m_intf->p_mainPlayerController, this));
         qmlRegisterTypesAndRevisions<TimedText>(uri, versionMajor);
         qmlRegisterType<PlayerHighResolutionTimeUpdater>(uri, versionMajor, versionMinor, "HighResolutionTimeUpdater");
         qmlRegisterUncreatableMetaObject(VLCTickForeign::staticMetaObject, uri, versionMajor, versionMinor, "VLCTick", "Not Instantiable" );

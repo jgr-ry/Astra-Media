@@ -87,6 +87,14 @@ vlc_modules += {
     'plugin_dir' : 'audio_filter',
 }
 
+# Astra Media spectrum analyser (feeds the interface visualizer)
+vlc_modules += {
+    'name' : 'astra_spectrum',
+    'sources' : files('astra_spectrum.c'),
+    'dependencies' : [m_lib],
+    'plugin_dir' : 'audio_filter',
+}
+
 # Gain module
 vlc_modules += {
     'name' : 'gain',
