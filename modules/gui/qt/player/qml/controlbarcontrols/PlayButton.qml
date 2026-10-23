@@ -56,8 +56,16 @@ T.Control {
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
     implicitHeight: implicitBackgroundHeight + topInset + bottomInset
 
-    scale: (_keyOkPressed || (mouseArea.pressed && cursorInside)) ? 0.95
-                                                                  : 1.00
+    scale: (_keyOkPressed || (mouseArea.pressed && cursorInside)) ? VLCStyle.pressedScale
+                                                                  : (cursorInside ? 1.04 : 1.00)
+
+    Behavior on scale {
+        NumberAnimation {
+            duration: VLCStyle.duration_long
+            easing.type: VLCStyle.easing_spring
+            easing.overshoot: VLCStyle.spring_overshoot
+        }
+    }
 
     Accessible.role: Accessible.Button
     Accessible.name: qsTr("Play/Pause")
@@ -218,7 +226,7 @@ T.Control {
         }
 
         color: cursorInside ? theme.accent
-                            : "black"  //foreground is always black
+                            : "#1C1C1E"  //foreground is always dark, the button is white
 
         font.pixelSize: Math.round(parent.height / 1.7)
 
@@ -261,8 +269,9 @@ T.Control {
             radius: width / 2
 
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#e25b01" }
-                GradientStop { position: 1.0; color: "#f89a06" }
+                // Astra Media: the ring follows the accent color
+                GradientStop { position: 0.0; color: Qt.lighter(theme.accent, 1.25) }
+                GradientStop { position: 1.0; color: Qt.darker(theme.accent, 1.15) }
             }
 
             Widgets.RoundedRectangleShadow {

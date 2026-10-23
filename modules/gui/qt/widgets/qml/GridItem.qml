@@ -124,6 +124,8 @@ T.ItemDelegate {
             PropertyChanges {
                 target: picture
                 implicitPlayCoverShowPlay: true
+                // Astra Media: covers lift up a little under the pointer
+                scale: 1.035
             }
 
         }
@@ -141,10 +143,20 @@ T.ItemDelegate {
                     property: "implicitPlayCoverShowPlay"
                 }
 
-                NumberAnimation {
-                    properties: "opacity"
-                    duration: VLCStyle.duration_long
-                    easing.type: Easing.InSine
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "opacity"
+                        duration: VLCStyle.duration_long
+                        easing.type: Easing.InSine
+                    }
+
+                    NumberAnimation {
+                        target: picture
+                        property: "scale"
+                        duration: VLCStyle.duration_long
+                        easing.type: VLCStyle.easing_spring
+                        easing.overshoot: VLCStyle.spring_overshoot
+                    }
                 }
             }
         },
@@ -159,10 +171,19 @@ T.ItemDelegate {
                     property: "implicitPlayCoverShowPlay"
                 }
 
-                NumberAnimation {
-                    properties: "opacity"
-                    duration: VLCStyle.duration_long
-                    easing.type: Easing.OutSine
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "opacity"
+                        duration: VLCStyle.duration_long
+                        easing.type: Easing.OutSine
+                    }
+
+                    NumberAnimation {
+                        target: picture
+                        property: "scale"
+                        duration: VLCStyle.duration_long
+                        easing.type: VLCStyle.easing_standard
+                    }
                 }
             }
         }

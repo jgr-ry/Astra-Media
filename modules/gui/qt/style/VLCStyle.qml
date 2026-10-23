@@ -92,10 +92,10 @@ QtObject {
 
     readonly property int listAlbumCover_height: MainCtx.dp(32, scale)
     readonly property int listAlbumCover_width: listAlbumCover_height * 16.0/9
-    readonly property int listAlbumCover_radius: MainCtx.dp(3, scale)
+    readonly property int listAlbumCover_radius: MainCtx.dp(6, scale)
     readonly property int trackListAlbumCover_width: MainCtx.dp(32, scale)
     readonly property int trackListAlbumCover_heigth: MainCtx.dp(32, scale)
-    readonly property int trackListAlbumCover_radius: MainCtx.dp(3, scale)
+    readonly property int trackListAlbumCover_radius: MainCtx.dp(6, scale)
 
     readonly property int tableCoverRow_height: Math.max(listAlbumCover_height, fontHeight_normal) + margin_xsmall * 2
     readonly property int tableRow_height: fontHeight_normal + margin_small * 2
@@ -175,7 +175,7 @@ QtObject {
     readonly property int button_width_normal: MainCtx.dp(96, scale)
     readonly property int button_width_large: MainCtx.dp(128, scale)
 
-    readonly property real button_radius: MainCtx.dp(4, scale)
+    readonly property real button_radius: MainCtx.dp(10, scale)
 
     readonly property int contextButton_width: icon_normal
     readonly property int contextButton_margin: margin_xxsmall
@@ -186,7 +186,7 @@ QtObject {
     readonly property int checkButton_margins: MainCtx.dp(4, scale)
     readonly property int checkButton_handle_margins: MainCtx.dp(2, scale)
 
-    readonly property int navBoxButton_radius: MainCtx.dp(8, scale)
+    readonly property int navBoxButton_radius: MainCtx.dp(12, scale)
 
     readonly property int table_section_width: MainCtx.dp(32, scale)
     readonly property int table_section_text_margin: MainCtx.dp(10, scale)
@@ -203,7 +203,7 @@ QtObject {
     readonly property int gridCover_video_height: ( gridCover_video_width * 10.0 ) / 16
     readonly property int gridCover_video_border: MainCtx.dp(4, scale)
 
-    readonly property int gridCover_radius: MainCtx.dp(4, scale)
+    readonly property int gridCover_radius: MainCtx.dp(12, scale)
 
     readonly property int expandCover_music_height: MainCtx.dp(171, scale)
     readonly property int expandCover_music_width: MainCtx.dp(171, scale)
@@ -212,7 +212,7 @@ QtObject {
 
     readonly property int artistGridCover_radius: MainCtx.dp(90, scale)
 
-    readonly property real mainView_topLeftRadius: MainCtx.dp(8, scale)
+    readonly property real mainView_topLeftRadius: MainCtx.dp(14, scale)
 
     //GridItem
     readonly property int gridItemTitle_topMargin: margin_xsmall + margin_xxxsmall
@@ -278,16 +278,16 @@ QtObject {
     // durations. Values are aligned on Kirigami
 
     //should be used for animation that benefits from a longer animation than duration_long
-    readonly property int duration_veryLong: 400
+    readonly property int duration_veryLong: 560
 
     //should be used for longer animation (opening/closing panes & dialogs)
-    readonly property int duration_long: 200
+    readonly property int duration_long: 320
 
     //should be used for short animations (hovering, accuenting UI event)
-    readonly property int duration_short: 100
+    readonly property int duration_short: 160
 
     //should be used for near instant animations
-    readonly property int duration_veryShort: 50
+    readonly property int duration_veryShort: 80
 
     /* human time reaction, how much time before the user should be informed that something
      * is going on, or before something should be automatically automated,
@@ -301,6 +301,20 @@ QtObject {
      *   wait this long before showing a spinner
      */
     readonly property int duration_humanMoment: 2000
+
+    // Astra Media motion: Apple-like curves. "spring" overshoots a little,
+    // "emphasized" decelerates strongly, "standard" is for everything else.
+    readonly property int easing_standard: Easing.OutCubic
+    readonly property int easing_emphasized: Easing.OutQuint
+    readonly property int easing_spring: Easing.OutBack
+    readonly property real spring_overshoot: 1.25
+    readonly property real pressedScale: 0.94
+    readonly property real hoveredScale: 1.06
+
+    // Astra Media surfaces
+    readonly property real cover_radius: MainCtx.dp(16, scale)
+    readonly property real glass_radius: MainCtx.dp(20, scale)
+    readonly property real glass_borderOpacity: 0.12
 
     //timing before showing up a tooltip
     readonly property int delayToolTipAppear: (Application?.styleHints?.toolTipWakeUpDelayAsMSec ?? 700)
