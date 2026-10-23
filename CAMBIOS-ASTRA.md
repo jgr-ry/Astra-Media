@@ -37,3 +37,28 @@ El historial de git tiene el detalle completo de cada cambio.
 | `share/icons/**`, `share/vlc512x512.png` | Iconos de la aplicación |
 | `modules/audio_filter/meson.build`, `Makefile.am`, `modules/gui/qt/meson.build`, `Makefile.am` | Compilan los archivos nuevos |
 | `po/es.po`, `po/POTFILES.in` | Traducciones al español de los textos nuevos |
+
+## 23 de octubre de 2026 (segunda tanda)
+
+### Archivos nuevos
+
+| Archivo | Qué hace |
+|---|---|
+| `modules/gui/qt/style/astra_widget_style.cpp`, `.hpp` | Estilo de las ventanas clásicas: paleta de Apple, hoja de estilos con controles redondeados, menús redondeados, botón principal azul |
+| `modules/gui/qt/pixmaps/astra/*.svg` | Marcas de verificación y flechas para ese estilo |
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `modules/gui/qt/maininterface/qml/NoMedialibHome.qml` | Inicio nuevo con la tarjeta «Reproduciendo ahora» y accesos rápidos |
+| `modules/gui/qt/maininterface/qml/MainDisplay.qml` | El vídeo pequeño (imagen en imagen) ya no tapa la barra lateral ni la tarjeta del inicio |
+| `modules/gui/qt/dialogs/preferences/*.cpp`, `.hpp` | Títulos grandes, barra de secciones y selector segmentado |
+| `modules/gui/qt/pixmaps/prefs/*` | Iconos de las secciones y vistas previas nuevas |
+| `modules/gui/qt/pixmaps/placeholder/*.svg` | Carátulas por defecto y botón «Añadir un servicio» rediseñados |
+| `modules/gui/qt/player/audio_spectrum.*`, `qml/Player.qml`, `qml/AstraSpectrumBars.qml` | Varios visualizadores a la vez y comprobación correcta de la visibilidad de la ventana |
+| `modules/gui/qt/player/qml/controlbarcontrols/ArtworkInfoWidget.qml` | Carátula de vídeo en el minirreproductor |
+| `modules/audio_filter/astra_spectrum.c` | Acepta cualquier formato de audio (FLAC, WAV...) |
+| `modules/gui/qt/style/systempalette.cpp` | Superficies elevadas en modo oscuro y deslizadores visibles en modo claro |
+| `modules/gui/qt/qt.cpp` | Activa el estilo de las ventanas clásicas |
+| `po/es.po` | Traducción completa al español |
